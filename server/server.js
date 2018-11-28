@@ -26,6 +26,17 @@ app.post('/todos', (req, res) => {
     });
 });
 
+/*
+ *  GET
+ */
+app.get('/todos', (req, res) => {
+    todo.find().then((todos) => {
+        res.send({todos});
+    }, (err) => {
+        res.status(400).send(err);
+    });
+});
+
 // Listen
 var PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
