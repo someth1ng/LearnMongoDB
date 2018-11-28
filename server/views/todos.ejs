@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="/fontawesome-free-5.4.1-web/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div id="container">
+        <h1>to-do list <span><i class="fas fa-plus"></span></i></h1>
+        <input type="text" placeholder="Add New Todo">
+
+        <ul>
+            <% todos.forEach(todo => { %>
+                <% if (todo.completed) { %>
+                    <li>
+                        <p class="todo-id"><%=todo._id%></p>
+                        <span><i class="fas fa-trash-alt"></i></span>
+                        <%= todo.text %>
+                        <!-- <p id="date"><%= new Date(todo.completedAt).toString() %></p> -->
+                    </li>
+                <% } else { %>
+                    <li class="selected">
+                        <p class="todo-id"><%=todo._id%></p>
+                        <span><i class="fas fa-trash-alt"></i></span>
+                        <%= todo.text %>
+                    </li>
+                <% } %>
+            <% }) %>
+        </ul>
+    </div>
+
+    <script src="/js/lib/jquery-3.3.1.min.js"></script>
+    <script src="/fontawesome-free-5.4.1-web/js/all.js"></script>
+    <script src="/js/todos.js"></script>
+</body>
+</html>

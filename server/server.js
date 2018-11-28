@@ -2,6 +2,7 @@ const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
+const methodOverride = require('method-override');
 
 var {mongoose} = require('./db/mongoose');
 var {todo} = require('./models/todo');
@@ -12,6 +13,15 @@ var app = express();
 
 // Configure body parser
 app.use(bodyParser.json());
+
+// View engine
+app.set('view engine', 'ejs');
+
+// Set public folder
+app.use(express.static(__dirname + '/public'));
+
+// Set method override
+app.use(methodOverride('_method'));
 
 // Routes -------------------------------------------------
 /*
@@ -30,11 +40,18 @@ app.post('/todos', (req, res) => {
 });
 
 /*
+ *  GET /
+ */
+app.get('/', (req, res) => {
+    res.redirect('todos');
+});
+
+/*
  *  GET /todos
  */
 app.get('/todos', (req, res) => {
     todo.find().then((todos) => {
-        res.send({todos});
+        res.render('todos', {todos});
     }, (err) => {
         res.status(400).send(err);
     });
@@ -74,14 +91,15 @@ app.delete('/todos/:id', (req, res) => {
             return res.status(404).send({ msg: 'Todo not found!' });
         }
 
-        res.send(td);
+        // res.send(td);
+        res.redirect('back');
     }, e => res.status(400).send({}));
 });
 
 /*
- *  PATCH /todos/:id
+ *  PUT /todos/:id
  */
-app.patch('/todos/:id', (req, res) => {
+app.put('/todos/:id', (req, res) => {
     var id = req.params.id;
     var body = _.pick(req.body, ['text', 'completed']);
 
