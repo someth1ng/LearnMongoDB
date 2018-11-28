@@ -11,7 +11,7 @@ var app = express();
 // Configure body parser
 app.use(bodyParser.json());
 
-// Routes
+// Routes -------------------------------------------------
 /*
  * POST 
  */
@@ -51,6 +51,25 @@ app.get('/todos/:id', (req, res) => {
     todo.findById(id).then(td => {
         if (!td) {
             return res.status(404).send({msg:'Todo not found!'});
+        }
+
+        res.send(td);
+    }, e => res.status(400).send({}));
+});
+
+/*
+ *  DELETE /todos/:id
+ */
+app.delete('/todos/:id', (req, res) => {
+    var id = req.params.id;
+
+    if (!ObjectID.isValid(id)) {
+        return res.status(400).send({});
+    }
+
+    todo.findByIdAndRemove(id).then(td => {
+        if (!td) {
+            return res.status(404).send({ msg: 'Todo not found!' });
         }
 
         res.send(td);
