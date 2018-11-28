@@ -11,16 +11,16 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', { useNewUrlParser: true
     const db    = client.db('TodoApp');
     const col   = db.collection('Users');
 
-    db.collection('Todos').insertOne({
-        text: 'Eat Luch',
-        completed: false
-    }, (err, res) => {
-        if (err) {
-            return console.log("Unable to insert todo", err);
-        }
+    // db.collection('Todos').insertOne({
+    //     text: 'Eat Luch',
+    //     completed: false
+    // }, (err, res) => {
+    //     if (err) {
+    //         return console.log("Unable to insert todo", err);
+    //     }
 
-        console.log(JSON.stringify(res.ops, undefined, 2));
-    });
+    //     console.log(JSON.stringify(res.ops, undefined, 2));
+    // });
 
     // db.collection('Users').insertOne({
     //     name: 'Xuan Trong',
